@@ -1,7 +1,9 @@
 package be.uhasselt.app
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import be.uhasselt.app.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 
@@ -14,11 +16,21 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
-        binding.button.setText("test knop")
 
-        binding.button.setOnClickListener { view ->
-            Snackbar.make(view, "Nice, clicked a button", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        binding.buttonSnackbar.setOnClickListener { view ->
+            msg("Goed op de knop gedrukt!", view)
         }
+
+        binding.buttonIntent.setOnClickListener(this::intent)
+    }
+
+    private fun intent(view: View) {
+        val intent = Intent(this, WelcomeActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun msg(text: String, view: View) {
+        Snackbar.make(view, text, Snackbar.LENGTH_LONG)
+            .setAction("Action", null).show()
     }
 }
