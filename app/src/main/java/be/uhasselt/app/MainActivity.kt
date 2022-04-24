@@ -21,7 +21,13 @@ class MainActivity : AppCompatActivity() {
             msg("Goed op de knop gedrukt!", view)
         }
 
-        binding.buttonIntent.setOnClickListener(this::intent)
+        //binding.buttonIntent.setOnClickListener(this::intent)
+        binding.buttonIntent.setOnClickListener(this::api)
+    }
+
+
+    fun api(view: View) {
+        VolleyAPI(this, view)
     }
 
     private fun intent(view: View) {
