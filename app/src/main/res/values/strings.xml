@@ -1,9 +1,12 @@
 <resources>
-    <string name="app_name">app</string>
+    <string name="appName">app</string>
     <string name="buttonSnackbar">snackbar</string>
-    <string name="buttonIntent">intent api</string>
+    <string name="buttonAPI">intent api</string>
     <string name="textviewWelcome">Welkom!</string>
     <string name="textviewMain">Hallo wereld!</string>
-    <string name="buttonIntent2">intent map</string>
+    <string name="buttonMap">intent map</string>
     <string name="buttonWelcome">welcome</string>
+    <string name="firstFragmentText">This is the first fragment!</string>
+    <string name="buttonNext">Navigate To Next</string>
+    <string name="secondFragmentText">This is the second fragment!</string>
 </resources>

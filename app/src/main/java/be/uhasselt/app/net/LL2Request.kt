@@ -9,7 +9,7 @@ import com.android.volley.toolbox.Volley
 import com.google.android.material.snackbar.Snackbar
 import org.json.JSONException
 
-class LL2Request(private val context: Context ,private val view: View) {
+class LL2Request(private val context: Context?, private val view: View) {
 
     var rocketLaunches: ArrayList<RocketLaunch> = arrayListOf()
 
