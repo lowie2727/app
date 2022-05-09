@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import be.uhasselt.app.databinding.ActivityMainBinding
+import be.uhasselt.app.net.LL2Request
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var request: LL2Request
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,13 +23,12 @@ class MainActivity : AppCompatActivity() {
             msg("Goed op de knop gedrukt!", view)
         }
 
-        //binding.buttonIntent.setOnClickListener(this::intent)
-        binding.buttonIntent.setOnClickListener(this::api)
+        request = LL2Request(this)
+        binding.buttonIntent.setOnClickListener(this::request)
     }
 
-
-    fun api(view: View) {
-        VolleyAPI(this, view)
+    fun request(view: View) {
+        request.load()
     }
 
     private fun intent(view: View) {
