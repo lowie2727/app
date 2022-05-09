@@ -5,9 +5,9 @@
 Every App should at minimum contain the following:
 
 * [ ] At least three fragments _or_ activities;
-* [ ] At least one data storage/request system;
+* [x] At least one data storage/request system;
 * [ ] At least one master/detail using a `RecyclerView`;
-* [ ] At least one `Intent`;
+* [x] At least one `Intent`;
 * [ ] At least one menu option;
 * [ ] At least one data signal to be used (GPS, Camera, accelerometer, ...);
 * [ ] At least one extra feature you can freely choose. For instance:

@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">app</string>
     <string name="buttonSnackbar">snackbar</string>
-    <string name="buttonIntent">intent</string>
+    <string name="buttonIntent">intent api</string>
     <string name="textviewWelcome">Welkom!</string>
     <string name="textviewMain">Hallo wereld!</string>
+    <string name="buttonIntent2">intent map</string>
+    <string name="buttonWelcome">welcome</string>
 </resources>
