@@ -9,4 +9,10 @@
     <string name="firstFragmentText">This is the first fragment!</string>
     <string name="buttonNext">Navigate To Next</string>
     <string name="secondFragmentText">This is the second fragment!</string>
+
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+
+    <string name="home">Home</string>
+    <string name="second_fragment">Second fragment</string>
 </resources>
