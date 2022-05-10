@@ -20,12 +20,9 @@ class LL2Request(private val context: Context?, private val view: View) {
             Request.Method.GET,
             url,
             null,
-            { respone ->
+            { response ->
                 try {
-                    rocketLaunches = LL2ResultParser.parse(respone)
-                    for (i in 0 until rocketLaunches.size) {
-                        println(rocketLaunches.get(i).toString())
-                    }
+                    rocketLaunches = LL2ResultParser.parse(response)
                     msg("rockets launches up to date", view)
                 } catch (e: JSONException) {
                     e.printStackTrace()
@@ -33,11 +30,15 @@ class LL2Request(private val context: Context?, private val view: View) {
             },
             { error ->
                 if (error.networkResponse.statusCode == 429) {
-                    msg("timeout probeer nog eens in ${error.networkResponse.headers?.get("retry-after")} seconden", view)
-                    println("timeout probeer nog eens in ${error.networkResponse.headers?.get("retry-after")} seconden")
+                    val errorStatus = error.networkResponse.headers?.get("retry-after")
+                    val errorMessage = "timeout probeer nog eens in $errorStatus seconden"
+                    msg(errorMessage, view)
+                    println(errorMessage)
                 } else {
-                    msg("fout opgetreden met status code ${error.networkResponse.statusCode}", view)
-                    println("fout opgetreden met status code ${error.networkResponse.statusCode}")
+                    val errorStatus = error.networkResponse.statusCode
+                    val errorMessage = "fout opgetreden met status code $errorStatus"
+                    msg(errorMessage, view)
+                    println(errorMessage)
                 }
             })
         queue.add(jsonObj)

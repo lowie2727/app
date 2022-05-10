@@ -6,7 +6,7 @@ import org.json.JSONObject
 object LL2ResultParser {
     fun parse(jsonObj: JSONObject): ArrayList<RocketLaunch> {
 
-        var rocketLaunches = arrayListOf<RocketLaunch>()
+        val rocketLaunches = arrayListOf<RocketLaunch>()
         val launches = jsonObj.getJSONArray("results")
 
         for (i in 0 until launches.length()) {

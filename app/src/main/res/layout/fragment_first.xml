@@ -47,28 +47,28 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:text="@string/buttonAPI"
-        app:layout_constraintBottom_toTopOf="@+id/buttonWelcome"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSave"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/buttonMap"
+        android:id="@+id/buttonLoad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:text="@string/buttonMap"
+        android:text="@string/buttonLoad"
         app:layout_constraintBottom_toTopOf="@+id/buttonSnackbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/buttonWelcome"
+        android:id="@+id/buttonSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:text="@string/buttonWelcome"
-        app:layout_constraintBottom_toTopOf="@+id/buttonMap"
+        android:text="@string/buttonSave"
+        app:layout_constraintBottom_toTopOf="@+id/buttonLoad"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

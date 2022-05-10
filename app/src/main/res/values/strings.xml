@@ -1,18 +1,23 @@
 <resources>
-    <string name="appName">app</string>
+    <string name="appName">Space Tracker</string>
+    <!-- First fragment buttons -->
+    <string name="buttonAPI">API call</string>
+    <string name="buttonSave">save</string>
+    <string name="buttonLoad">load</string>
     <string name="buttonSnackbar">snackbar</string>
-    <string name="buttonAPI">intent api</string>
+    <string name="buttonNext">Navigate To Next</string>
+    <!-- fragments text boxes -->
     <string name="textviewWelcome">Welkom!</string>
     <string name="textviewMain">Hallo wereld!</string>
-    <string name="buttonMap">intent map</string>
-    <string name="buttonWelcome">welcome</string>
     <string name="firstFragmentText">This is the first fragment!</string>
-    <string name="buttonNext">Navigate To Next</string>
     <string name="secondFragmentText">This is the second fragment!</string>
-
-    <string name="nav_open">Open</string>
-    <string name="nav_close">Close</string>
-
+    <!-- navigation -->
+    <string name="header_title">Onze mooie app</string>
+    <string name="header_text">gemaakt door: anonymous</string>
     <string name="home">Home</string>
     <string name="second_fragment">Second fragment</string>
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+    <!-- recycle -->
+    <string name="recycle">Some Title</string>
 </resources>
