@@ -5,12 +5,13 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class RocketLaunch(
     var rocketName: String,
-    var lauchDate: String,
+    var launchDate: String,
     var latitude: String,
-    var longitude: String
+    var longitude: String,
+    var missionName: String
 ) : java.io.Serializable {
 
     override fun toString(): String {
-        return "rocket name: $rocketName\nlaunch date: $lauchDate\ncoordinates: $latitude°N, $longitude°E"
+        return "rocket name: $rocketName\nmission name: $missionName\nlaunch date: $launchDate\ncoordinates: $latitude°N, $longitude°E"
     }
 }

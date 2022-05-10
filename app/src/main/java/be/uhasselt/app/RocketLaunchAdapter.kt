@@ -18,9 +18,10 @@ class RocketLaunchAdapter(private val rocketLaunches: ArrayList<RocketLaunch>) :
     }
 
     override fun onBindViewHolder(holder: RocketViewHolder, position: Int) {
-        val currentTodoItem = rocketLaunches[position]
+        val rocketLaunch = rocketLaunches[position]
         holder.itemView.apply {
-            findViewById<TextView>(R.id.txtTodoTitle).text = currentTodoItem.rocketName
+            findViewById<TextView>(R.id.txtTodoTitle).text =
+                "${rocketLaunch.rocketName} |\n${rocketLaunch.missionName}"
         }
     }
 

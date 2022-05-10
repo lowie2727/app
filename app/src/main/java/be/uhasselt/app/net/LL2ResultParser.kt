@@ -13,11 +13,13 @@ object LL2ResultParser {
             val launch = launches.getJSONObject(i)
             val rocket = launch.getJSONObject("rocket")
             val launchPad = launch.getJSONObject("pad")
+            val launchMission = launch.getJSONObject("mission")
             val rocketLaunch = RocketLaunch(
                 rocket.getJSONObject("configuration").getString("name"),
                 launch.getString("window_start"),
                 launchPad.getString("latitude"),
-                launchPad.getString("longitude")
+                launchPad.getString("longitude"),
+                launchMission.getString("name")
             )
             rocketLaunches.add(rocketLaunch)
         }

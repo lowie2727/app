@@ -5,24 +5,24 @@ import java.io.*
 
 class SaveFile(private val context: Context) {
 
-    fun load(): List<*> {
+    fun load(fileName: String): String? {
         try {
             val openFileInput =
-                context.openFileInput("rocketLauches.txt") ?: return arrayListOf<RocketLaunch>()
+                context.openFileInput(fileName) ?: return null
             ObjectInputStream(openFileInput).use {
-                return it.readObject() as ArrayList<*>
+                return it.readObject() as String
             }
         } catch (fileNotFound: FileNotFoundException) {
             // no file yet, revert to defaults.
         } catch (prematureEndOfFile: EOFException) {
             // also ignore this: file incomplete/corrupt, revert to defaults.
         }
-        return arrayListOf<RocketLaunch>()
+        return null
     }
 
-    fun save(rocketLaunches: List<RocketLaunch>) {
+    fun save(rocketLaunches: String, fileName: String) {
         val openFileOutput =
-            context.openFileOutput("rocketLauches.txt", Context.MODE_PRIVATE) ?: return
+            context.openFileOutput(fileName, Context.MODE_PRIVATE) ?: return
         ObjectOutputStream(openFileOutput).use {
             it.writeObject(rocketLaunches)
         }

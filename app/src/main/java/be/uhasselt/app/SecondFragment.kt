@@ -33,10 +33,11 @@ class SecondFragment : Fragment(R.layout.fragment_second) {
 
         binding.txtFragmentSecond.text = "Fragment 2, model: ${age.age}"
 
-        val adapter = RocketLaunchAdapter(temp)
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(context)
-
+        if (temp != null) {
+            val adapter = RocketLaunchAdapter(temp)
+            binding.recyclerView.adapter = adapter
+            binding.recyclerView.layoutManager = LinearLayoutManager(context)
+        }
         return binding.root
     }
 }

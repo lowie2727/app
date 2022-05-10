@@ -1,7 +1,6 @@
 package be.uhasselt.app
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import be.uhasselt.app.databinding.FragmentFirstBinding
 import be.uhasselt.app.model.MySharedData
 import be.uhasselt.app.model.RocketLaunch
+import be.uhasselt.app.model.SaveFile
 import be.uhasselt.app.net.LL2Request
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
@@ -22,8 +22,8 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
     private lateinit var binding: FragmentFirstBinding
     private lateinit var request: LL2Request
     private var data: MySharedData = MySharedData()
-    private var jsonData: String = ""
     private lateinit var sharedPref: SharedPreferences
+
     private var rocketLaunches = arrayListOf<RocketLaunch>()
 
     // here the view should be set
@@ -38,11 +38,11 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
 
         request = LL2Request(requireContext(), binding.root)
 
-        sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)!!
+        sharedPref = activity?.getSharedPreferences("key", Context.MODE_PRIVATE)!!
 
         binding.buttonAPI.setOnClickListener(this::request)
-        binding.buttonSave.setOnClickListener(this::saveRocketsToSharedPreferences)
-        binding.buttonLoad.setOnClickListener(this::loadRocketsFromSharedPreferences)
+        binding.buttonSave.setOnClickListener(this::saveToFile)
+        binding.buttonLoad.setOnClickListener(this::loadFromFile)
         binding.buttonSnackbar.setOnClickListener(this::snackbarMessage)
         binding.btnGoToNext.setOnClickListener(this::next)
 
@@ -58,13 +58,74 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
         request.load()
     }
 
-    private fun saveRocketsToSharedPreferences(view: View) {
-        jsonData = Gson().toJson(request.rocketLaunches)
-        sharedPref.edit().putString("key", jsonData).apply()
+    private fun saveToFile(view: View) {
+        saveAgeToFile()
+        saveRocketsToFile()
+    }
+
+    private fun saveRocketsToFile() {
+        val jsonDataLaunches = Gson().toJson(request.rocketLaunches)
+        val saveFile = SaveFile(requireContext())
+        if (jsonDataLaunches != null) {
+            saveFile.save(jsonDataLaunches, "rockets.txt")
+        }
+    }
+
+    private fun saveAgeToFile() {
+        val jsonDataObject = Gson().toJson(data)
+        val saveFile = SaveFile(requireContext())
+        if (jsonDataObject != null) {
+            saveFile.save(jsonDataObject, "data.txt")
+        }
+    }
+
+    private fun loadFromFile(view: View) {
+        loadAgeFromFile()
+        loadRocketsFromFile()
+    }
+
+    private fun loadRocketsFromFile() {
+        val saveFile = SaveFile(requireContext())
+        val jsonDataLaunches = saveFile.load("rockets.txt")
+        val type = object : TypeToken<ArrayList<RocketLaunch>>() {}.type
+        val temp = Gson().fromJson<ArrayList<RocketLaunch>>(jsonDataLaunches, type)
+        if (temp != null) {
+            rocketLaunches = temp
+            if (rocketLaunches.isEmpty()) {
+                println("lijst is empty")
+            } else {
+                for (element in rocketLaunches) {
+                    println(element.toString())
+                }
+            }
+        }
+    }
+
+    private fun loadAgeFromFile() {
+        val saveFile = SaveFile(requireContext())
+        val jsonDataLaunches = saveFile.load("data.txt")
+        val type = object : TypeToken<MySharedData>() {}.type
+        val temp = Gson().fromJson<MySharedData>(jsonDataLaunches, type)
+        if (temp != null) {
+            data = temp
+        }
+        updateTextFromModel()
+    }
+
+    /*private fun saveRocketsToSharedPreferences(view: View) {
+        sharedPref = activity?.getSharedPreferences("key", Context.MODE_PRIVATE)!!
+        val jsonDataLaunches = Gson().toJson(request.rocketLaunches)
+        val jsonDataObject = Gson().toJson(data)
+
+        sharedPref.edit().putString("key", jsonDataLaunches).apply()
+        sharedPref.edit().putString("key2", jsonDataObject).apply()
+        //sharedPref.edit().putInt("key2", data.age).apply()
+
         msg("saved all rockets", view)
     }
 
     private fun loadRocketsFromSharedPreferences(view: View) {
+        sharedPref = activity?.getSharedPreferences("key", Context.MODE_PRIVATE)!!
         val json = sharedPref.getString("key", null)
         val type = object : TypeToken<ArrayList<RocketLaunch>>() {}.type
         val temp = Gson().fromJson<ArrayList<RocketLaunch>>(json, type)
@@ -78,8 +139,9 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
                 }
             }
         }
+        updateTextFromModel()
         msg("loaded all rockets", view)
-    }
+    }*/
 
     private fun snackbarMessage(view: View) {
         msg("Goed op de knop gedrukt!", view)
@@ -88,6 +150,7 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
     private fun next(view: View) {
         // adding an object to a bundle only works with serialization plugins!
         // see the intents parts of the course.
+        val jsonData = Gson().toJson(rocketLaunches)
         val bundle = bundleOf("age" to data, "data" to jsonData)
         findNavController().navigate(R.id.action_firstFragment_to_secondFragment, bundle)
     }
@@ -101,12 +164,12 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
         updateTextFromModel()
     }
 
-    private fun welcome(view: View) {
+    /*private fun welcome(view: View) {
         val intent = Intent(this.context, WelcomeActivity::class.java)
         startActivity(intent)
     }
 
-    /*fun maps(view: View) {
+    fun maps(view: View) {
         if (request.rocketLaunches.isNotEmpty()) {
             val latitude = request.rocketLaunches[0].latitude
             val longitude = request.rocketLaunches[0].longitude
@@ -118,21 +181,6 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
             startActivity(callIntent)
         } else {
             msg("no rockets found", view)
-        }
-    }
-
-    private fun loadRocketsFromFile(view: View) {
-        val saveFile = SaveFile(requireContext())
-        val rockets = saveFile.load()
-        for (element in rockets) {
-            println(element.toString())
-        }
-    }
-
-    private fun saveRocketsToFile(view: View) {
-        val saveFile = SaveFile(requireContext())
-        if (request.rocketLaunches.isNotEmpty()) {
-            saveFile.save(request.rocketLaunches)
         }
     }*/
 
