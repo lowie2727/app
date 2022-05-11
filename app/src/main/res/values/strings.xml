@@ -1,23 +1,39 @@
 <resources>
-    <string name="appName">Space Tracker</string>
-    <!-- First fragment buttons -->
-    <string name="buttonAPI">API call</string>
-    <string name="buttonSave">save</string>
-    <string name="buttonLoad">load</string>
-    <string name="buttonSnackbar">snackbar</string>
-    <string name="buttonNext">Navigate To Next</string>
-    <!-- fragments text boxes -->
-    <string name="textviewWelcome">Welkom!</string>
-    <string name="textviewMain">Hallo wereld!</string>
-    <string name="firstFragmentText">This is the first fragment!</string>
-    <string name="secondFragmentText">This is the second fragment!</string>
-    <!-- navigation -->
-    <string name="header_title">Onze mooie app</string>
-    <string name="header_text">gemaakt door: anonymous</string>
-    <string name="home">Home</string>
-    <string name="second_fragment">Second fragment</string>
+    <string name="app_name">Space Tracker</string>
+    <!-- login fragment -->
+    <string name="login_hint_email">mail@example.com</string>
+    <string name="login_hint_password">password</string>
+    <string name="login_login_button">login</string>
+    <string name="login_register_button">register</string>
+
+    <!-- register fragment -->
+    <string name="register_hint_name">Joe</string>
+    <string name="register_hint_email">mail@example.com</string>
+    <string name="register_hint_password">password</string>
+    <string name="register_create_account_button">create account</string>
+
+    <!-- first fragment -->
+    <string name="first_text1">This is the first fragment!</string>
+    <string name="first_text2">Hello world!</string>
+    <string name="first_button_API">api call</string>
+    <string name="first_button_save">save</string>
+    <string name="first_button_load">load</string>
+    <string name="first_button_snackbar">snackbar</string>
+    <string name="first_button_next">navigate to next</string>
+
+    <!-- second fragment -->
+    <string name="second_text">This is the second fragment!</string>
+
+    <!-- navigation drawer -->
+    <string name="nav_drawer_title">Onze mooie app</string>
+    <string name="nav_drawer_text">gemaakt door: anonymous</string>
+
+    <!-- drawer menu -->
+    <string name="drawer_menu_item_1">Home</string>
+    <string name="drawer_menu_item_2">Second fragment</string>
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
+
     <!-- recycle -->
     <string name="recycle">Some Title</string>
 </resources>

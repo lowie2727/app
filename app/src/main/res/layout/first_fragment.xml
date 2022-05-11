@@ -4,27 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FirstFragment">
+    tools:context=".fragments.FirstFragment">
 
     <TextView
-        android:id="@+id/txtFragmentFirst"
+        android:id="@+id/text_view_fragment_first"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
-        android:text="@string/firstFragmentText"
+        android:text="@string/first_text1"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/textViewMain"
+        app:layout_constraintBottom_toTopOf="@+id/text_view_main"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textViewMain"
+        android:id="@+id/text_view_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
-        android:text="@string/textviewMain"
-        app:layout_constraintBottom_toTopOf="@+id/buttonAPI"
+        android:text="@string/first_text2"
+        app:layout_constraintBottom_toTopOf="@+id/button_api_request"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,52 +32,52 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
-        android:id="@+id/buttonSnackbar"
+        android:id="@+id/button_api_request"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:text="@string/buttonSnackbar"
-        app:layout_constraintBottom_toTopOf="@+id/btnGoToNext"
+        android:text="@string/first_button_API"
+        app:layout_constraintBottom_toTopOf="@+id/button_save_to_file"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/buttonAPI"
+        android:id="@+id/button_save_to_file"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:text="@string/buttonAPI"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSave"
+        android:text="@string/first_button_save"
+        app:layout_constraintBottom_toTopOf="@+id/button_load_from_file"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/buttonLoad"
+        android:id="@+id/button_load_from_file"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:text="@string/buttonLoad"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSnackbar"
+        android:text="@string/first_button_load"
+        app:layout_constraintBottom_toTopOf="@+id/button_maps"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/buttonSave"
+        android:id="@+id/button_maps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:text="@string/buttonSave"
-        app:layout_constraintBottom_toTopOf="@+id/buttonLoad"
+        android:text="@string/first_button_snackbar"
+        app:layout_constraintBottom_toTopOf="@+id/button_to_fragment_second"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnGoToNext"
+        android:id="@+id/button_to_fragment_second"
         android:layout_width="234dp"
         android:layout_height="48dp"
         android:layout_marginBottom="60dp"
-        android:text="@string/buttonNext"
+        android:text="@string/first_button_next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"

@@ -1,7 +1,7 @@
-package be.uhasselt.app
+package be.uhasselt.app.fragments
 
-import android.content.Context
-import android.content.SharedPreferences
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,21 +9,21 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import be.uhasselt.app.databinding.FragmentFirstBinding
+import be.uhasselt.app.R
+import be.uhasselt.app.databinding.FirstFragmentBinding
 import be.uhasselt.app.model.MySharedData
 import be.uhasselt.app.model.RocketLaunch
-import be.uhasselt.app.model.SaveFile
+import be.uhasselt.app.file.SaveFile
 import be.uhasselt.app.net.LL2Request
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class FirstFragment : Fragment(R.layout.fragment_first) {
-    private lateinit var binding: FragmentFirstBinding
+class FirstFragment : Fragment(R.layout.first_fragment) {
+
+    private lateinit var binding: FirstFragmentBinding
     private lateinit var request: LL2Request
     private var data: MySharedData = MySharedData()
-    private lateinit var sharedPref: SharedPreferences
-
     private var rocketLaunches = arrayListOf<RocketLaunch>()
 
     // here the view should be set
@@ -34,18 +34,18 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
         // this looks a lot like activities! Fragments have their own lifecycle.
         // return inflater.inflate(R.layout.fragment_first, container, false)
         // -- above should NOT be needed since we used a constructor argument!
-        binding = FragmentFirstBinding.inflate(layoutInflater)
+        binding = FirstFragmentBinding.inflate(layoutInflater)
 
         request = LL2Request(requireContext(), binding.root)
 
-        binding.buttonAPI.setOnClickListener(this::request)
-        binding.buttonSave.setOnClickListener(this::saveToFile)
-        binding.buttonLoad.setOnClickListener(this::loadFromFile)
-        binding.buttonSnackbar.setOnClickListener(this::snackbarMessage)
-        binding.btnGoToNext.setOnClickListener(this::next)
+        binding.buttonApiRequest.setOnClickListener(this::request)
+        binding.buttonSaveToFile.setOnClickListener(this::saveToFile)
+        binding.buttonLoadFromFile.setOnClickListener(this::loadFromFile)
+        binding.buttonMaps.setOnClickListener(this::maps)
+        binding.buttonToFragmentSecond.setOnClickListener(this::next)
 
         updateTextFromModel()
-        binding.txtFragmentFirst.setOnClickListener(this::click)
+        binding.textViewFragmentFirst.setOnClickListener(this::click)
 
         // remember to do this instead of super.onCreateView()
         // otherwise nothing will happen.
@@ -126,9 +126,9 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
         //sharedPref.edit().putInt("key2", data.age).apply()
 
         msg("saved all rockets", view)
-    }
+    }*/
 
-    private fun loadRocketsFromSharedPreferences(view: View) {
+    /*private fun loadRocketsFromSharedPreferences(view: View) {
         sharedPref = activity?.getSharedPreferences("key", Context.MODE_PRIVATE)!!
         val json = sharedPref.getString("key", null)
         val type = object : TypeToken<ArrayList<RocketLaunch>>() {}.type
@@ -147,20 +147,16 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
         msg("loaded all rockets", view)
     }*/
 
-    private fun snackbarMessage(view: View) {
-        msg("Goed op de knop gedrukt!", view)
-    }
-
     private fun next(view: View) {
         // adding an object to a bundle only works with serialization plugins!
         // see the intents parts of the course.
         val jsonData = Gson().toJson(rocketLaunches)
         val bundle = bundleOf("age" to data, "data" to jsonData)
-        findNavController().navigate(R.id.action_firstFragment_to_secondFragment, bundle)
+        findNavController().navigate(R.id.action_first_fragment_to_second_fragment, bundle)
     }
 
     private fun updateTextFromModel() {
-        binding.txtFragmentFirst.text = "Fragment 1, model: ${data.age}"
+        binding.textViewFragmentFirst.text = "Fragment 1, model: ${data.age}"
     }
 
     private fun click(view: View) {
@@ -169,12 +165,7 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
         saveAgeToFile()
     }
 
-    /*private fun welcome(view: View) {
-        val intent = Intent(this.context, WelcomeActivity::class.java)
-        startActivity(intent)
-    }
-
-    fun maps(view: View) {
+    private fun maps(view: View) {
         if (request.rocketLaunches.isNotEmpty()) {
             val latitude = request.rocketLaunches[0].latitude
             val longitude = request.rocketLaunches[0].longitude
@@ -187,7 +178,7 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
         } else {
             msg("no rockets found", view)
         }
-    }*/
+    }
 
     private fun msg(text: String, view: View) {
         Snackbar.make(view, text, Snackbar.LENGTH_LONG)

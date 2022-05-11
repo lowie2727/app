@@ -1,4 +1,4 @@
-package be.uhasselt.app.model
+package be.uhasselt.app.file
 
 import android.content.Context
 import java.io.*
