@@ -41,7 +41,7 @@
         android:label="register_fragment"
         tools:layout="@layout/register_fragment">
         <action
-            android:id="@+id/action_register_fragment_to_first_fragment"
-            app:destination="@id/first_fragment" />
+            android:id="@+id/action_register_fragment_to_login_fragment"
+            app:destination="@id/login_fragment" />
     </fragment>
 </navigation>

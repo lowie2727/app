@@ -7,7 +7,8 @@
     <string name="login_register_button">register</string>
 
     <!-- register fragment -->
-    <string name="register_hint_name">Joe</string>
+    <string name="register_hint_full_name">full name</string>
+    <string name="register_hint_user_name">user name</string>
     <string name="register_hint_email">mail@example.com</string>
     <string name="register_hint_password">password</string>
     <string name="register_create_account_button">create account</string>
@@ -36,4 +37,5 @@
 
     <!-- recycle -->
     <string name="recycle">Some Title</string>
+
 </resources>

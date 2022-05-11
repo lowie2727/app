@@ -71,4 +71,6 @@ dependencies {
     // Jetpack Compose Integration
     implementation "androidx.navigation:navigation-compose:$nav_version"
 
+    implementation "io.appwrite:sdk-for-android:0.5.0"
+
 }
