@@ -29,7 +29,10 @@ class LL2Request(private val context: Context?, private val view: View) {
                 }
             },
             { error ->
-                if (error.networkResponse.statusCode == 429) {
+                if(error.networkResponse == null) {
+                    msg("No internet connection", view)
+                }
+                else if (error.networkResponse.statusCode == 429) {
                     val errorStatus = error.networkResponse.headers?.get("retry-after")
                     val errorMessage = "timeout probeer nog eens in $errorStatus seconden"
                     msg(errorMessage, view)
