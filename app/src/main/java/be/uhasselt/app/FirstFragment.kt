@@ -38,8 +38,6 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
 
         request = LL2Request(requireContext(), binding.root)
 
-        sharedPref = activity?.getSharedPreferences("key", Context.MODE_PRIVATE)!!
-
         binding.buttonAPI.setOnClickListener(this::request)
         binding.buttonSave.setOnClickListener(this::saveToFile)
         binding.buttonLoad.setOnClickListener(this::loadFromFile)
@@ -55,12 +53,18 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
     }
 
     private fun request(view: View) {
-        request.load()
+        if (rocketLaunches.isEmpty()) {
+            request.load()
+            msg("updating launches", view)
+        } else {
+            msg("already up to date", view)
+        }
     }
 
     private fun saveToFile(view: View) {
         saveAgeToFile()
         saveRocketsToFile()
+        loadFromFile(view)
     }
 
     private fun saveRocketsToFile() {
@@ -85,19 +89,19 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
     }
 
     private fun loadRocketsFromFile() {
-        val saveFile = SaveFile(requireContext())
-        val jsonDataLaunches = saveFile.load("rockets.txt")
-        val type = object : TypeToken<ArrayList<RocketLaunch>>() {}.type
-        val temp = Gson().fromJson<ArrayList<RocketLaunch>>(jsonDataLaunches, type)
-        if (temp != null) {
-            rocketLaunches = temp
-            if (rocketLaunches.isEmpty()) {
-                println("lijst is empty")
-            } else {
+        if (rocketLaunches.isEmpty()) {
+            val saveFile = SaveFile(requireContext())
+            val jsonDataLaunches = saveFile.load("rockets.txt")
+            val type = object : TypeToken<ArrayList<RocketLaunch>>() {}.type
+            val temp = Gson().fromJson<ArrayList<RocketLaunch>>(jsonDataLaunches, type)
+            if (temp != null) {
+                rocketLaunches = temp
                 for (element in rocketLaunches) {
                     println(element.toString())
                 }
             }
+        } else {
+            msg("already up to date", requireView())
         }
     }
 
@@ -162,6 +166,7 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
     private fun click(view: View) {
         data.age++
         updateTextFromModel()
+        saveAgeToFile()
     }
 
     /*private fun welcome(view: View) {
@@ -190,6 +195,7 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        loadFromFile(view)
         super.onViewCreated(view, savedInstanceState)
         println("Fragment: onViewCreated")
     }

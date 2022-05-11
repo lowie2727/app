@@ -23,7 +23,7 @@ class LL2Request(private val context: Context?, private val view: View) {
             { response ->
                 try {
                     rocketLaunches = LL2ResultParser.parse(response)
-                    msg("rockets launches up to date", view)
+                    msg("succes", view)
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }

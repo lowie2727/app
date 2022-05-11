@@ -14,3 +14,8 @@ Every App should at minimum contain the following:
     - Authentication through Google's Play Store or [Firebase](https://console.firebase.google.com/?pli=1)
     - Sharing data between apps using a `ContentProvider`
     - Etc... See [links](https://kuleuven-diepenbeek.github.io/appdev-course/extra/links) for more inspiration on what's possible.
+
+## TODO
+* API call should automatically save rocket launches instead of pressing a button
+* adding functionality to the navigation drawer
+* making a new activity/fragment for a more detailed view of the launch
