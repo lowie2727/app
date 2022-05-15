@@ -5,6 +5,7 @@
     <string name="login_hint_password">password</string>
     <string name="login_login_button">login</string>
     <string name="login_register_button">register</string>
+    <string name="login_bypass_login_button">Bypass login</string>
 
     <!-- register fragment -->
     <string name="register_hint_full_name">full name</string>
@@ -31,7 +32,9 @@
 
     <!-- drawer menu -->
     <string name="drawer_menu_item_1">Home</string>
-    <string name="drawer_menu_item_2">Second fragment</string>
+    <string name="drawer_menu_item_2">Rockets</string>
+    <string name="drawer_menu_item_login">Login</string>
+    <string name="drawer_menu_item_register">Register</string>
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
 

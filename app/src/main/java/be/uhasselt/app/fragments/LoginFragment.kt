@@ -32,6 +32,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
 
         binding.buttonLogin.setOnClickListener(this::login)
         binding.buttonGoToCreateAccount.setOnClickListener(this::goToCreateAccount)
+        binding.buttonBypassLogin.setOnClickListener(this::byPassLogin)
 
         return binding.root
     }
@@ -57,6 +58,10 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
 
     private fun goToCreateAccount(view: View) {
         findNavController().navigate(R.id.action_login_fragment_to_register_fragment)
+    }
+
+    private fun byPassLogin(view: View) {
+        findNavController().navigate(R.id.action_login_fragment_to_first_fragment)
     }
 
     private fun msg(text: String, view: View) {

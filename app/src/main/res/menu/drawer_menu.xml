@@ -6,7 +6,13 @@
             android:id="@+id/nav_home"
             android:title="@string/drawer_menu_item_1" />
         <item
-            android:id="@+id/nav_second"
+            android:id="@+id/nav_rockets"
             android:title="@string/drawer_menu_item_2" />
+        <item
+            android:id="@+id/nav_login"
+            android:title="@string/drawer_menu_item_login" />
+        <item
+            android:id="@+id/nav_register"
+            android:title="@string/drawer_menu_item_register" />
     </group>
 </menu>

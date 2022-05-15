@@ -16,6 +16,7 @@ Every App should at minimum contain the following:
     - Etc... See [links](https://kuleuven-diepenbeek.github.io/appdev-course/extra/links) for more inspiration on what's possible.
 
 ## TODO
-* API call should automatically save rocket launches instead of pressing a button
+* API call should automatically save rocket launches instead of pressing a button (execute function when api responds)
 * adding functionality to the navigation drawer
+* check for null values in json response
 * making a new activity/fragment for a more detailed view of the launch
