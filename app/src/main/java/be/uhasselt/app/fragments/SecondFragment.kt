@@ -25,8 +25,6 @@ class SecondFragment : Fragment(R.layout.second_fragment) {
     ): View {
         binding = SecondFragmentBinding.inflate(layoutInflater)
 
-        // use the "elvis operator": if left-hand side is null, provide right-hand side.
-        // since arguments is nullable ("?"), always make sure to provide an alternative.
         val age = (arguments?.getSerializable("age") as MySharedData?) ?: MySharedData()
         val data = (arguments?.getSerializable("data") as String?) ?: String()
 

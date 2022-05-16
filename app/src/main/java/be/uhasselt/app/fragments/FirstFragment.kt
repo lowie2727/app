@@ -26,14 +26,9 @@ class FirstFragment : Fragment(R.layout.first_fragment) {
     private var data: MySharedData = MySharedData()
     private var rocketLaunches = arrayListOf<RocketLaunch>()
 
-    // here the view should be set
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        println("Fragment: onCreateView")
-        // this looks a lot like activities! Fragments have their own lifecycle.
-        // return inflater.inflate(R.layout.fragment_first, container, false)
-        // -- above should NOT be needed since we used a constructor argument!
         binding = FirstFragmentBinding.inflate(layoutInflater)
 
         request = LL2Request(requireContext(), binding.root)
@@ -47,8 +42,6 @@ class FirstFragment : Fragment(R.layout.first_fragment) {
         updateTextFromModel()
         binding.textViewFragmentFirst.setOnClickListener(this::click)
 
-        // remember to do this instead of super.onCreateView()
-        // otherwise nothing will happen.
         return binding.root
     }
 
@@ -116,40 +109,7 @@ class FirstFragment : Fragment(R.layout.first_fragment) {
         updateTextFromModel()
     }
 
-    /*private fun saveRocketsToSharedPreferences(view: View) {
-        sharedPref = activity?.getSharedPreferences("key", Context.MODE_PRIVATE)!!
-        val jsonDataLaunches = Gson().toJson(request.rocketLaunches)
-        val jsonDataObject = Gson().toJson(data)
-
-        sharedPref.edit().putString("key", jsonDataLaunches).apply()
-        sharedPref.edit().putString("key2", jsonDataObject).apply()
-        //sharedPref.edit().putInt("key2", data.age).apply()
-
-        msg("saved all rockets", view)
-    }*/
-
-    /*private fun loadRocketsFromSharedPreferences(view: View) {
-        sharedPref = activity?.getSharedPreferences("key", Context.MODE_PRIVATE)!!
-        val json = sharedPref.getString("key", null)
-        val type = object : TypeToken<ArrayList<RocketLaunch>>() {}.type
-        val temp = Gson().fromJson<ArrayList<RocketLaunch>>(json, type)
-        if (temp != null) {
-            rocketLaunches = temp
-            if (rocketLaunches.isEmpty()) {
-                println("lijst is empty")
-            } else {
-                for (element in rocketLaunches) {
-                    println(element.toString())
-                }
-            }
-        }
-        updateTextFromModel()
-        msg("loaded all rockets", view)
-    }*/
-
     private fun next(view: View) {
-        // adding an object to a bundle only works with serialization plugins!
-        // see the intents parts of the course.
         val jsonData = Gson().toJson(rocketLaunches)
         val bundle = bundleOf("age" to data, "data" to jsonData)
         findNavController().navigate(R.id.action_first_fragment_to_second_fragment, bundle)
@@ -191,8 +151,6 @@ class FirstFragment : Fragment(R.layout.first_fragment) {
         println("Fragment: onViewCreated")
     }
 
-    // here the view should NOT be set: onCreateView() is called afterwards.
-    // remember that accessing UI components here will crash!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         println("Fragment: onCreate")

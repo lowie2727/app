@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.navigation.fragment.findNavController
 import be.uhasselt.app.databinding.ActivityMainBinding
 import be.uhasselt.app.fragments.FirstFragment
 
@@ -11,7 +13,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private lateinit var binding: ActivityMainBinding
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,16 +30,31 @@ class MainActivity : AppCompatActivity() {
         actionBarDrawerToggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        binding.navigationView.setNavigationItemSelectedListener {
-            when(it.itemId) {
-                R.id.nav_home -> println("home")
-                R.id.nav_rockets -> println("rockets")
-                R.id.nav_login -> println("login")
-                R.id.nav_register -> println("register")
-            }
-            true
+        val navigationController =
+            binding.fragmentContainerView.getFragment<FirstFragment>().findNavController()
 
+        binding.navigationView.setNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.nav_home -> {
+                    navigationController.navigate(R.id.first_fragment)
+                }
+                R.id.nav_rockets -> {
+                    navigationController.navigate(R.id.second_fragment)
+                }
+                R.id.nav_login -> {
+                    navigationController.navigate(R.id.login_fragment)
+                }
+                R.id.nav_register -> {
+                    navigationController.navigate(R.id.register_fragment)
+                }
+            }
+            close()
+            true
         }
+    }
+
+    private fun close() {
+        binding.drawerLayout.closeDrawer(GravityCompat.START)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
