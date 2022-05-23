@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.navigation.fragment.findNavController
 import be.uhasselt.app.databinding.ActivityMainBinding
-import be.uhasselt.app.fragments.FirstFragment
+import be.uhasselt.app.fragments.MainMenuFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,22 +31,14 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val navigationController =
-            binding.fragmentContainerView.getFragment<FirstFragment>().findNavController()
+            binding.fragmentContainerView.getFragment<MainMenuFragment>().findNavController()
 
         binding.navigationView.setNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.nav_home -> {
-                    navigationController.navigate(R.id.first_fragment)
-                }
-                R.id.nav_rockets -> {
-                    navigationController.navigate(R.id.second_fragment)
-                }
-                R.id.nav_login -> {
-                    navigationController.navigate(R.id.login_fragment)
-                }
-                R.id.nav_register -> {
-                    navigationController.navigate(R.id.register_fragment)
-                }
+                R.id.nav_home -> navigationController.navigate(R.id.first_fragment)
+                R.id.nav_rockets -> navigationController.navigate(R.id.second_fragment)
+                R.id.nav_login -> navigationController.navigate(R.id.login_fragment)
+                R.id.nav_register -> navigationController.navigate(R.id.register_fragment)
             }
             close()
             true

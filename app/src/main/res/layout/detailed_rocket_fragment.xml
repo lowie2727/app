@@ -3,18 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:padding="16dp">
+    android:layout_height="match_parent"
+    tools:context=".fragments.DetailedRocketFragment">
 
     <TextView
-        android:id="@+id/text_view_rocket_launch"
-        android:layout_width="0dp"
+        android:id="@+id/text_view_detailed_rocket"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:minHeight="48dp"
-        android:text="@string/recycle"
-        android:textSize="16sp"
+        android:text="@string/rocket_info"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

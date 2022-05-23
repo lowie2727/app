@@ -14,17 +14,20 @@
     <string name="register_hint_password">password</string>
     <string name="register_create_account_button">create account</string>
 
-    <!-- first fragment -->
-    <string name="first_text1">This is the first fragment!</string>
-    <string name="first_text2">Hello world!</string>
-    <string name="first_button_API">api call</string>
-    <string name="first_button_save">save</string>
-    <string name="first_button_load">load</string>
-    <string name="first_button_snackbar">snackbar</string>
-    <string name="first_button_next">navigate to next</string>
+    <!-- main menu fragment -->
+    <string name="main_menu_text1">First fragment!</string>
+    <string name="main_menu_text2">Hello world!</string>
+    <string name="main_menu_button_API">api call</string>
+    <string name="main_menu_button_save">save</string>
+    <string name="main_menu_button_load">load</string>
+    <string name="main_menu_button_snackbar">snackbar</string>
+    <string name="main_menu_button_next">navigate to next</string>
 
-    <!-- second fragment -->
-    <string name="second_text">This is the second fragment!</string>
+    <!-- rocket list fragment -->
+    <string name="rocket_list_text">Second fragment!</string>
+
+    <!-- rocket fragment -->
+    <string name="rocket_info">rocket info</string>
 
     <!-- navigation drawer -->
     <string name="nav_drawer_title">Onze mooie app</string>

@@ -8,30 +8,27 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import be.uhasselt.app.R
 import be.uhasselt.app.RocketLaunchAdapter
-import be.uhasselt.app.databinding.SecondFragmentBinding
-import be.uhasselt.app.model.MySharedData
+import be.uhasselt.app.databinding.RocketListFragmentBinding
 import be.uhasselt.app.model.RocketLaunch
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class SecondFragment : Fragment(R.layout.second_fragment) {
+class RocketListFragment : Fragment(R.layout.rocket_list_fragment) {
 
-    private lateinit var binding: SecondFragmentBinding
+    private lateinit var binding: RocketListFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = SecondFragmentBinding.inflate(layoutInflater)
+        binding = RocketListFragmentBinding.inflate(layoutInflater)
 
-        val age = (arguments?.getSerializable("age") as MySharedData?) ?: MySharedData()
         val data = (arguments?.getSerializable("data") as String?) ?: String()
 
         val type = object : TypeToken<ArrayList<RocketLaunch>>() {}.type
         val temp = Gson().fromJson<ArrayList<RocketLaunch>>(data, type)
 
-        binding.textViewFragmentSecond.text = "Fragment 2, model: ${age.age}"
 
         if (temp != null) {
             val adapter = RocketLaunchAdapter(temp)

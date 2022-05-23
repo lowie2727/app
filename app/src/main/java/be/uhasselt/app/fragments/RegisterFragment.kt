@@ -1,15 +1,12 @@
 package be.uhasselt.app.fragments
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import androidx.annotation.RestrictTo
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import be.uhasselt.app.R
 import be.uhasselt.app.databinding.RegisterFragmentBinding

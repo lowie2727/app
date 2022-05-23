@@ -9,9 +9,11 @@ import com.android.volley.toolbox.Volley
 import com.google.android.material.snackbar.Snackbar
 import org.json.JSONException
 
-class LL2Request(private val context: Context?, private val view: View) {
-
-    var rocketLaunches: ArrayList<RocketLaunch> = arrayListOf()
+class LL2Request(
+    private val context: Context?,
+    private val view: View,
+    val onResponseFetched: (ArrayList<RocketLaunch>) -> Unit
+) {
 
     fun load() {
         val queue = Volley.newRequestQueue(context)
@@ -22,9 +24,9 @@ class LL2Request(private val context: Context?, private val view: View) {
             null,
             { response ->
                 try {
-                    rocketLaunches = LL2ResultParser.parse(response)
-                    msg("succes", view)
+                    onResponseFetched(LL2ResultParser.parse(response))
                 } catch (e: JSONException) {
+                    msg("${e.cause}", view)
                     e.printStackTrace()
                 }
             },
