@@ -6,24 +6,24 @@
     app:startDestination="@id/login_fragment">
 
     <fragment
-        android:id="@+id/first_fragment"
+        android:id="@+id/main_fragment"
         android:name="be.uhasselt.app.fragments.MainMenuFragment"
-        android:label="first_fragment"
+        android:label="main_fragment"
         tools:layout="@layout/main_menu_fragment">
         <action
-            android:id="@+id/action_first_fragment_to_second_fragment"
-            app:destination="@id/second_fragment" />
+            android:id="@+id/action_main_fragment_to_rocket_list_fragment"
+            app:destination="@id/rocket_list_fragment" />
     </fragment>
     <fragment
-        android:id="@+id/second_fragment"
+        android:id="@+id/rocket_list_fragment"
         android:name="be.uhasselt.app.fragments.RocketListFragment"
-        android:label="second_fragment"
+        android:label="rocket_list_fragment"
         tools:layout="@layout/rocket_list_fragment">
         <action
-            android:id="@+id/action_second_fragment_to_first_fragment"
-            app:destination="@id/first_fragment" />
+            android:id="@+id/action_rocket_list_fragment_to_main_fragment"
+            app:destination="@id/main_fragment" />
         <action
-            android:id="@+id/action_second_fragment_to_detailedRocketFragment"
+            android:id="@+id/action_rocket_list_fragment_to_detailed_rocket_fragment"
             app:destination="@id/detailed_rocket_fragment" />
     </fragment>
     <fragment
@@ -32,8 +32,8 @@
         android:label="login_fragment"
         tools:layout="@layout/login_fragment">
         <action
-            android:id="@+id/action_login_fragment_to_first_fragment"
-            app:destination="@id/first_fragment" />
+            android:id="@+id/action_login_fragment_to_main_fragment"
+            app:destination="@id/main_fragment" />
         <action
             android:id="@+id/action_login_fragment_to_register_fragment"
             app:destination="@id/register_fragment" />

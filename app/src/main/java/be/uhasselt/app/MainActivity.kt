@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
         setupMenuDrawer()
-
     }
 
     private fun setupMenuDrawer() {
@@ -35,8 +34,8 @@ class MainActivity : AppCompatActivity() {
 
         binding.navigationView.setNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.nav_home -> navigationController.navigate(R.id.first_fragment)
-                R.id.nav_rockets -> navigationController.navigate(R.id.second_fragment)
+                R.id.nav_home -> navigationController.navigate(R.id.main_fragment)
+                R.id.nav_rockets -> navigationController.navigate(R.id.rocket_list_fragment)
                 R.id.nav_login -> navigationController.navigate(R.id.login_fragment)
                 R.id.nav_register -> navigationController.navigate(R.id.register_fragment)
             }

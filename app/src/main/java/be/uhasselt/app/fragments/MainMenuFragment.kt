@@ -86,7 +86,7 @@ class MainMenuFragment : Fragment(R.layout.main_menu_fragment) {
     private fun next(view: View) {
         val jsonData = Gson().toJson(rocketLaunches)
         val bundle = bundleOf("data" to jsonData)
-        findNavController().navigate(R.id.action_first_fragment_to_second_fragment, bundle)
+        findNavController().navigate(R.id.action_main_fragment_to_rocket_list_fragment, bundle)
     }
 
     private fun maps(view: View) {

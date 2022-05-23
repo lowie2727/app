@@ -6,14 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import be.uhasselt.app.R
 import be.uhasselt.app.databinding.LoginFragmentBinding
 import be.uhasselt.app.net.Appwrite
 import com.google.android.material.snackbar.Snackbar
-import io.appwrite.exceptions.AppwriteException
-import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment(R.layout.login_fragment) {
 
@@ -27,7 +24,15 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
     ): View {
         binding = LoginFragmentBinding.inflate(layoutInflater)
 
-        appwrite = Appwrite()
+        appwrite = Appwrite { isSuccess, error, user ->
+            if (isSuccess) {
+                msg("success", requireView())
+                findNavController().navigate(R.id.action_login_fragment_to_main_fragment)
+            } else {
+                msg(error!!, requireView())
+            }
+        }
+
         appwrite.createClient(this.requireContext())
 
         binding.buttonLogin.setOnClickListener(this::login)
@@ -53,7 +58,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
         } else {
             msg("loading...", view)
         }
-        createSession(email, password)
+        appwrite.createSession(email, password)
     }
 
     private fun goToCreateAccount(view: View) {
@@ -61,25 +66,11 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
     }
 
     private fun byPassLogin(view: View) {
-        findNavController().navigate(R.id.action_login_fragment_to_first_fragment)
+        findNavController().navigate(R.id.action_login_fragment_to_main_fragment)
     }
 
     private fun msg(text: String, view: View) {
         Snackbar.make(view, text, Snackbar.LENGTH_LONG)
             .setAction("Action", null).show()
-    }
-
-    private fun createSession(email: String, password: String) {
-        lifecycleScope.launch {
-            try {
-                appwrite.account.createSession(
-                    email = email,
-                    password = password
-                )
-                findNavController().navigate(R.id.action_login_fragment_to_first_fragment)
-            } catch (e: AppwriteException) {
-                msg(e.message.toString(), requireView())
-            }
-        }
     }
 }

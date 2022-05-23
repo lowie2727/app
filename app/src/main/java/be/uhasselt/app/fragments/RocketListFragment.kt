@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import be.uhasselt.app.R
-import be.uhasselt.app.RocketLaunchAdapter
+import be.uhasselt.app.adapter.RocketLaunchAdapter
 import be.uhasselt.app.databinding.RocketListFragmentBinding
 import be.uhasselt.app.model.RocketLaunch
 import com.google.gson.Gson

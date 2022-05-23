@@ -17,4 +17,5 @@ Every App should at minimum contain the following:
 
 ## TODO
 * API call should automatically save rocket launches instead of pressing a button (execute function when api responds)
-* making a new activity/fragment for a more detailed view of the launch
+* Improving the app's appearance
+* Shake the mobile phone to show a popup

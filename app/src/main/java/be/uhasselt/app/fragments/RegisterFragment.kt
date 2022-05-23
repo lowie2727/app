@@ -27,7 +27,15 @@ class RegisterFragment : Fragment(R.layout.register_fragment) {
     ): View {
         binding = RegisterFragmentBinding.inflate(layoutInflater)
 
-        appwrite = Appwrite()
+        appwrite = Appwrite { isSuccess, error, user ->
+            if (isSuccess) {
+                msg("success", requireView())
+                findNavController().navigate(R.id.action_register_fragment_to_login_fragment)
+            } else {
+                msg(error!!, requireView())
+            }
+        }
+
         appwrite.createClient(this.requireContext())
 
         binding.registerButtonCreateAccount.setOnClickListener(this::createAccount)
@@ -61,28 +69,11 @@ class RegisterFragment : Fragment(R.layout.register_fragment) {
         } else {
             msg("creating account", view)
         }
-
-        createAccount(userId, email, password, name)
+        appwrite.createAccount(userId, email, password, name)
     }
 
     private fun msg(text: String, view: View) {
         Snackbar.make(view, text, Snackbar.LENGTH_LONG)
             .setAction("Action", null).show()
-    }
-
-    private fun createAccount(userId: String, email: String, password: String, name: String) {
-        lifecycleScope.launch {
-            try {
-                appwrite.account.create(
-                    userId = userId,
-                    email = email,
-                    password = password,
-                    name = name
-                )
-                findNavController().navigate(R.id.action_register_fragment_to_login_fragment)
-            } catch (e: AppwriteException) {
-                msg(e.message.toString(), requireView())
-            }
-        }
     }
 }
