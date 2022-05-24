@@ -6,8 +6,8 @@ import org.json.JSONObject
 object LL2ResultParser {
     fun parse(jsonObj: JSONObject): ArrayList<RocketLaunch> {
 
-        var launchMission: JSONObject
         var mission: String
+        var imageUrl: String
         val rocketLaunches = arrayListOf<RocketLaunch>()
         val launches = jsonObj.getJSONArray("results")
 
@@ -17,10 +17,16 @@ object LL2ResultParser {
             val launchPad = launch.getJSONObject("pad")
 
             if (!launch.isNull("mission")) {
-                launchMission = launch.getJSONObject("mission")
+                val launchMission = launch.getJSONObject("mission")
                 mission = launchMission.getString("name")
             } else {
                 mission = "Not part of a mission"
+            }
+
+            if (!launch.isNull("image")) {
+                imageUrl = launch.getString("image")
+            } else {
+                imageUrl = ""
             }
 
             val rocketLaunch = RocketLaunch(
@@ -28,7 +34,8 @@ object LL2ResultParser {
                 launch.getString("window_start"),
                 launchPad.getString("latitude"),
                 launchPad.getString("longitude"),
-                mission
+                mission,
+                imageUrl
             )
             rocketLaunches.add(rocketLaunch)
         }

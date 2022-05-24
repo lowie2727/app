@@ -1,7 +1,5 @@
 package be.uhasselt.app.fragments
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,11 +25,10 @@ class MainMenuFragment : Fragment(R.layout.main_menu_fragment) {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-
         binding = MainMenuFragmentBinding.inflate(layoutInflater)
 
         binding.buttonApiRequest.setOnClickListener(this::forceUpdate)
-        binding.buttonToFragmentSecond.setOnClickListener(this::next)
+        binding.buttonToRocketListFragment.setOnClickListener(this::next)
 
         return binding.root
     }
@@ -40,7 +37,7 @@ class MainMenuFragment : Fragment(R.layout.main_menu_fragment) {
         request = LL2Request(requireContext(), binding.root) { rockets ->
             rocketLaunches = rockets
             saveRocketsToFile(rocketLaunches)
-            msg("update successful", requireView())
+            msg("update successful", view)
         }
         request()
         super.onViewCreated(view, savedInstanceState)
@@ -81,21 +78,6 @@ class MainMenuFragment : Fragment(R.layout.main_menu_fragment) {
         val jsonData = Gson().toJson(rocketLaunches)
         val bundle = bundleOf("data" to jsonData)
         findNavController().navigate(R.id.action_main_fragment_to_rocket_list_fragment, bundle)
-    }
-
-    private fun maps(view: View) {
-        if (rocketLaunches.isNotEmpty()) {
-            val latitude = rocketLaunches[0].latitude
-            val longitude = rocketLaunches[0].longitude
-
-            val callIntent = Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse("geo:launch location?q=$latitude,$longitude")
-            )
-            startActivity(callIntent)
-        } else {
-            msg("no rockets found", view)
-        }
     }
 
     private fun msg(text: String, view: View) {

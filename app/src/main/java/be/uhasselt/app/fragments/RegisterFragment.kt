@@ -6,14 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import be.uhasselt.app.R
 import be.uhasselt.app.databinding.RegisterFragmentBinding
 import com.google.android.material.snackbar.Snackbar
 import be.uhasselt.app.net.Appwrite
-import io.appwrite.exceptions.AppwriteException
-import kotlinx.coroutines.launch
 
 class RegisterFragment : Fragment(R.layout.register_fragment) {
 

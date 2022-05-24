@@ -43,7 +43,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button_to_fragment_second"
+        android:id="@+id/button_to_rocket_list_fragment"
         android:layout_width="234dp"
         android:layout_height="48dp"
         android:layout_marginBottom="60dp"
