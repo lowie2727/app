@@ -30,42 +30,38 @@ class MainMenuFragment : Fragment(R.layout.main_menu_fragment) {
 
         binding = MainMenuFragmentBinding.inflate(layoutInflater)
 
-        request = LL2Request(requireContext(), binding.root) { rockets ->
-            rocketLaunches = rockets
-            saveToFile(requireView())
-            msg("success", requireView())
-        }
-
-        binding.buttonApiRequest.setOnClickListener(this::request)
+        binding.buttonApiRequest.setOnClickListener(this::forceUpdate)
         binding.buttonToFragmentSecond.setOnClickListener(this::next)
 
         return binding.root
     }
 
-    private fun request(view: View) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        request = LL2Request(requireContext(), binding.root) { rockets ->
+            rocketLaunches = rockets
+            saveRocketsToFile(rocketLaunches)
+            msg("update successful", requireView())
+        }
+        request()
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun request() {
+        loadRocketsFromFile()
         if (rocketLaunches.isEmpty()) {
             request.load()
-            msg("updating launches", view)
-        } else {
-            msg("launches up to date", view)
         }
     }
 
-    private fun saveToFile(view: View) {
-        saveRocketsToFile()
-        loadFromFile(view)
+    private fun forceUpdate(view: View) {
+        request.load()
+        msg("updating launches", view)
     }
 
-    private fun saveRocketsToFile() {
-        val jsonDataLaunches = Gson().toJson(rocketLaunches)
+    private fun saveRocketsToFile(rocketLaunches: ArrayList<RocketLaunch>) {
+        val jsonDataLaunches: String = Gson().toJson(rocketLaunches)
         val saveFile = SaveFile(requireContext())
-        if (jsonDataLaunches != null) {
-            saveFile.save(jsonDataLaunches, "rockets.txt")
-        }
-    }
-
-    private fun loadFromFile(view: View) {
-        loadRocketsFromFile()
+        saveFile.save(jsonDataLaunches, "rockets.txt")
     }
 
     private fun loadRocketsFromFile() {
@@ -75,9 +71,7 @@ class MainMenuFragment : Fragment(R.layout.main_menu_fragment) {
             val type = object : TypeToken<ArrayList<RocketLaunch>>() {}.type
             val launchesLoadedFromFile =
                 Gson().fromJson<ArrayList<RocketLaunch>>(jsonDataLaunches, type)
-            if (launchesLoadedFromFile == null) {
-                request.load()
-            } else {
+            if (launchesLoadedFromFile != null) {
                 rocketLaunches = launchesLoadedFromFile
             }
         }
@@ -107,11 +101,5 @@ class MainMenuFragment : Fragment(R.layout.main_menu_fragment) {
     private fun msg(text: String, view: View) {
         Snackbar.make(view, text, Snackbar.LENGTH_LONG)
             .setAction("Action", null).show()
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        loadFromFile(view)
-        request(view)
-        super.onViewCreated(view, savedInstanceState)
     }
 }

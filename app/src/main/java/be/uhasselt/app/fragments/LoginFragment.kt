@@ -24,16 +24,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
     ): View {
         binding = LoginFragmentBinding.inflate(layoutInflater)
 
-        appwrite = Appwrite { isSuccess, error, user ->
-            if (isSuccess) {
-                msg("success", requireView())
-                findNavController().navigate(R.id.action_login_fragment_to_main_fragment)
-            } else {
-                msg(error!!, requireView())
-            }
-        }
-
-        appwrite.createClient(this.requireContext())
+        appwriteSetup()
 
         binding.buttonLogin.setOnClickListener(this::login)
         binding.buttonGoToCreateAccount.setOnClickListener(this::goToCreateAccount)
@@ -59,6 +50,18 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
             msg("loading...", view)
         }
         appwrite.createSession(email, password)
+    }
+
+    private fun appwriteSetup() {
+        appwrite = Appwrite { isSuccess, error, _ ->
+            if (isSuccess) {
+                msg("success", requireView())
+                findNavController().navigate(R.id.action_login_fragment_to_main_fragment)
+            } else {
+                msg(error!!, requireView())
+            }
+        }
+        appwrite.createClient(requireContext())
     }
 
     private fun goToCreateAccount(view: View) {

@@ -20,7 +20,7 @@ object LL2ResultParser {
                 launchMission = launch.getJSONObject("mission")
                 mission = launchMission.getString("name")
             } else {
-                mission = ""
+                mission = "Not part of a mission"
             }
 
             val rocketLaunch = RocketLaunch(
