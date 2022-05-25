@@ -43,7 +43,7 @@ class RocketListFragment : Fragment(R.layout.rocket_list_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (rocketLaunches.isEmpty()) {
-            msg("loading in rockets...", requireView())
+            msg("loading in rockets...", view)
             request.load()
         }
         super.onViewCreated(view, savedInstanceState)

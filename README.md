@@ -1,5 +1,7 @@
 ## An app for tracking spaceflights using the [Launch Library 2 API](https://thespacedevs.com/llapi)
 
+The LL2 API default rate limit is 15 calls per hour
+
 ## Minimum requirements
 
 Every App should at minimum contain the following:
@@ -16,6 +18,6 @@ Every App should at minimum contain the following:
     - Etc... See [links](https://kuleuven-diepenbeek.github.io/appdev-course/extra/links) for more inspiration on what's possible.
 
 ## TODO
-* API call should automatically save rocket launches instead of pressing a button (execute function when api responds)
 * Improving the app's appearance
 * Shake the mobile phone to show a popup
+* Users should be able to mark launches as favourites

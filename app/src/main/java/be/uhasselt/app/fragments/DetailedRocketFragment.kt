@@ -40,8 +40,7 @@ class DetailedRocketFragment : Fragment(R.layout.detailed_rocket_fragment) {
         rocketLaunch = Gson().fromJson<RocketLaunch>(data, type)!!
 
         binding.textViewDetailedRocket.text =
-            "rocket: ${rocketLaunch.rocketName}\nmission: ${rocketLaunch.missionName}\n\n\n" +
-                    "coordinates\nlongitude: ${rocketLaunch.longitude}, latitude: ${rocketLaunch.latitude}"
+            "rocket: ${rocketLaunch.rocketName}\nmission: ${rocketLaunch.missionName}"
     }
 
     private fun maps(view: View) {

@@ -1,7 +1,10 @@
 package be.uhasselt.app.file
 
 import android.content.Context
-import java.io.*
+import java.io.EOFException
+import java.io.FileNotFoundException
+import java.io.ObjectInputStream
+import java.io.ObjectOutputStream
 
 class SaveFile(private val context: Context) {
 

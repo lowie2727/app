@@ -9,7 +9,8 @@ data class RocketLaunch(
     val latitude: String,
     val longitude: String,
     val missionName: String,
-    val rocketImageUrl: String
+    val rocketImageUrl: String,
+    var isFavorite: Boolean
 
 ) : java.io.Serializable {
 

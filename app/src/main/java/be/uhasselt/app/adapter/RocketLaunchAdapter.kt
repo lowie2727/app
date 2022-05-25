@@ -3,6 +3,7 @@ package be.uhasselt.app.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
@@ -34,6 +35,8 @@ class RocketLaunchAdapter(private val rocketLaunches: ArrayList<RocketLaunch>) :
     override fun onBindViewHolder(holder: RocketViewHolder, position: Int) {
         val rocketLaunch = rocketLaunches[position]
         holder.itemView.apply {
+            val checkBox = findViewById<CheckBox>(R.id.favorite_selector)
+            checkBox.isChecked = true
             findViewById<TextView>(R.id.text_view_rocket_launch).text =
                 "${rocketLaunch.rocketName} |\n${rocketLaunch.missionName}"
         }

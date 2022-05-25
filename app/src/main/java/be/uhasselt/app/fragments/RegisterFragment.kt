@@ -27,8 +27,13 @@ class RegisterFragment : Fragment(R.layout.register_fragment) {
         appwriteSetup()
 
         binding.registerButtonCreateAccount.setOnClickListener(this::createAccount)
+        binding.cancelButton.setOnClickListener(this::cancel)
 
         return binding.root
+    }
+
+    private fun cancel(view: View) {
+        findNavController().navigate(R.id.action_register_fragment_to_login_fragment)
     }
 
     private fun createAccount(view: View) {

@@ -35,7 +35,8 @@ object LL2ResultParser {
                 launchPad.getString("latitude"),
                 launchPad.getString("longitude"),
                 mission,
-                imageUrl
+                imageUrl,
+                false
             )
             rocketLaunches.add(rocketLaunch)
         }

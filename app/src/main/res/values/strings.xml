@@ -1,21 +1,23 @@
 <resources>
     <string name="app_name">Space Tracker</string>
     <!-- login fragment -->
-    <string name="login_hint_email">mail@example.com</string>
-    <string name="login_hint_password">password</string>
+    <string name="login_head_text">Sign In</string>
+    <string name="login_hint_email">Email Address</string>
+    <string name="login_hint_password">Password</string>
     <string name="login_login_button">login</string>
     <string name="login_register_button">register</string>
     <string name="login_bypass_login_button">Bypass login</string>
 
     <!-- register fragment -->
-    <string name="register_hint_full_name">full name</string>
-    <string name="register_hint_user_name">user name</string>
-    <string name="register_hint_email">mail@example.com</string>
-    <string name="register_hint_password">password</string>
+    <string name="register_head_text">Register</string>
+    <string name="register_hint_full_name">Full Name</string>
+    <string name="register_hint_user_name">User Name</string>
+    <string name="register_hint_email">Email Address</string>
+    <string name="register_hint_password">Password</string>
     <string name="register_create_account_button">create account</string>
 
     <!-- main menu fragment -->
-    <string name="main_menu_text1">First fragment!</string>
+    <string name="main_menu_text1">Main Menu</string>
     <string name="main_menu_text2">Hello world!</string>
     <string name="main_menu_button_API">api call</string>
     <string name="main_menu_button_save">save</string>
@@ -24,7 +26,8 @@
     <string name="main_menu_button_next">navigate to next</string>
 
     <!-- rocket list fragment -->
-    <string name="rocket_list_text">Second fragment!</string>
+    <string name="rocket_list_text">Rocket list of upcoming launches</string>
+    <string name="rocket_list_sub_text">Click on a rocket for more information</string>
 
     <!-- rocket fragment -->
     <string name="rocket_info">rocket info</string>
