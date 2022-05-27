@@ -41,7 +41,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.993" />
+        app:layout_constraintVertical_bias="0.993"
+        tools:ignore="TextContrastCheck" />
 
     <EditText
         android:id="@+id/edit_text_register_user_name"
@@ -62,7 +63,8 @@
         app:layout_constraintBottom_toTopOf="@+id/edit_text_register_email_address"
         app:layout_constraintEnd_toEndOf="@+id/edit_text_register_full_name"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/edit_text_register_full_name" />
+        app:layout_constraintStart_toStartOf="@+id/edit_text_register_full_name"
+        tools:ignore="TextContrastCheck" />
 
     <EditText
         android:id="@+id/edit_text_register_email_address"
@@ -83,7 +85,8 @@
         app:layout_constraintBottom_toTopOf="@+id/edit_text_register_password"
         app:layout_constraintEnd_toEndOf="@+id/edit_text_register_user_name"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/edit_text_register_user_name" />
+        app:layout_constraintStart_toStartOf="@+id/edit_text_register_user_name"
+        tools:ignore="TextContrastCheck" />
 
     <EditText
         android:id="@+id/edit_text_register_password"
@@ -104,7 +107,8 @@
         app:layout_constraintBottom_toTopOf="@+id/register_button_create_account"
         app:layout_constraintEnd_toEndOf="@+id/edit_text_register_email_address"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/edit_text_register_email_address" />
+        app:layout_constraintStart_toStartOf="@+id/edit_text_register_email_address"
+        tools:ignore="TextContrastCheck" />
 
     <Button
         android:id="@+id/register_button_create_account"

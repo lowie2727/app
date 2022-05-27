@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import be.uhasselt.app.MainActivity
 import be.uhasselt.app.R
 import be.uhasselt.app.databinding.RegisterFragmentBinding
 import com.google.android.material.snackbar.Snackbar
@@ -37,6 +38,11 @@ class RegisterFragment : Fragment(R.layout.register_fragment) {
     }
 
     private fun createAccount(view: View) {
+        if (!MainActivity().checkInternet(requireContext())) {
+            msg("No internet connection", view)
+            return
+        }
+
         val userId = binding.editTextRegisterUserName.text.toString()
         val email = binding.editTextRegisterEmailAddress.text.toString()
         val password = binding.editTextRegisterPassword.text.toString()

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import be.uhasselt.app.MainActivity
 import be.uhasselt.app.R
 import be.uhasselt.app.databinding.LoginFragmentBinding
 import be.uhasselt.app.net.Appwrite
@@ -34,6 +35,11 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
     }
 
     private fun login(view: View) {
+        if (!MainActivity().checkInternet(requireContext())) {
+            msg("No internet connection", view)
+            return
+        }
+
         val email = binding.editTextRegisterEmailAddress.text.toString()
         val password = binding.editTextRegisterPassword.text.toString()
 
