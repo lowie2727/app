@@ -12,6 +12,7 @@ import be.uhasselt.app.databinding.RocketListFragmentBinding
 import be.uhasselt.app.file.SaveFile
 import be.uhasselt.app.model.RocketLaunch
 import be.uhasselt.app.net.LL2Request
+import be.uhasselt.app.net.LL2ResultParser
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -21,6 +22,7 @@ class RocketListFragment : Fragment(R.layout.rocket_list_fragment) {
     private lateinit var binding: RocketListFragmentBinding
     private lateinit var request: LL2Request
     private var rocketLaunches = arrayListOf<RocketLaunch>()
+    private var isClear = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,12 +31,6 @@ class RocketListFragment : Fragment(R.layout.rocket_list_fragment) {
     ): View {
         binding = RocketListFragmentBinding.inflate(layoutInflater)
 
-        request = LL2Request(requireContext(), binding.root) { rockets ->
-            rocketLaunches = rockets
-            saveRocketsToFile(rocketLaunches)
-            setupAdapter()
-        }
-
         loadRocketsFromFile()
         setupAdapter()
 
@@ -42,11 +38,38 @@ class RocketListFragment : Fragment(R.layout.rocket_list_fragment) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setupAPIResponse(view)
+
         if (rocketLaunches.isEmpty()) {
             msg("loading in rockets...", view)
+            isClear = false
             request.load()
         }
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun setupAPIResponse(view: View) {
+        request = LL2Request(requireContext()) { isSuccess, jsonObject, error ->
+            if (isSuccess) {
+                rocketLaunches = LL2ResultParser.parse(jsonObject!!)
+                saveRocketsToFile(rocketLaunches)
+                msg("update successful", view)
+            } else {
+                if (error!!.networkResponse == null) {
+                    msg("No internet connection", view)
+                } else if (error.networkResponse.statusCode == 429) {
+                    val errorStatus = error.networkResponse.headers?.get("retry-after")
+                    val errorMessage = "timeout probeer nog eens in $errorStatus seconden"
+                    msg(errorMessage, view)
+                } else {
+                    val errorStatus = error.networkResponse.statusCode
+                    val errorMessage = "fout opgetreden met status code $errorStatus"
+                    msg(errorMessage, view)
+                }
+            }
+            setupAdapter()
+            isClear = true
+        }
     }
 
     private fun setupAdapter() {

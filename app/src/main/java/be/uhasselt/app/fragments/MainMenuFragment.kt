@@ -12,6 +12,7 @@ import be.uhasselt.app.databinding.MainMenuFragmentBinding
 import be.uhasselt.app.model.RocketLaunch
 import be.uhasselt.app.file.SaveFile
 import be.uhasselt.app.net.LL2Request
+import be.uhasselt.app.net.LL2ResultParser
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -21,6 +22,7 @@ class MainMenuFragment : Fragment(R.layout.main_menu_fragment) {
     private lateinit var binding: MainMenuFragmentBinding
     private lateinit var request: LL2Request
     private var rocketLaunches = arrayListOf<RocketLaunch>()
+    private var isClear = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -34,23 +36,44 @@ class MainMenuFragment : Fragment(R.layout.main_menu_fragment) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        request = LL2Request(requireContext(), binding.root) { rockets ->
-            rocketLaunches = rockets
-            saveRocketsToFile(rocketLaunches)
-            msg("update successful", view)
-        }
+        setupAPIResponse(view)
         request()
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun setupAPIResponse(view: View) {
+        request = LL2Request(requireContext()) { isSuccess, jsonObject, error ->
+            if (isSuccess) {
+                rocketLaunches = LL2ResultParser.parse(jsonObject!!)
+                saveRocketsToFile(rocketLaunches)
+                msg("update successful", view)
+            } else {
+                if (error!!.networkResponse == null) {
+                    msg("No internet connection", view)
+                } else if (error.networkResponse.statusCode == 429) {
+                    val errorStatus = error.networkResponse.headers?.get("retry-after")
+                    val errorMessage = "timeout probeer nog eens in $errorStatus seconden"
+                    msg(errorMessage, view)
+                } else {
+                    val errorStatus = error.networkResponse.statusCode
+                    val errorMessage = "fout opgetreden met status code $errorStatus"
+                    msg(errorMessage, view)
+                }
+            }
+            isClear = true
+        }
     }
 
     private fun request() {
         loadRocketsFromFile()
         if (rocketLaunches.isEmpty()) {
+            isClear = false
             request.load()
         }
     }
 
     private fun forceUpdate(view: View) {
+        isClear = false
         request.load()
         msg("updating launches", view)
     }
@@ -75,9 +98,13 @@ class MainMenuFragment : Fragment(R.layout.main_menu_fragment) {
     }
 
     private fun next(view: View) {
-        val jsonData = Gson().toJson(rocketLaunches)
-        val bundle = bundleOf("data" to jsonData)
-        findNavController().navigate(R.id.action_main_fragment_to_rocket_list_fragment, bundle)
+        if (isClear) {
+            val jsonData = Gson().toJson(rocketLaunches)
+            val bundle = bundleOf("data" to jsonData)
+            findNavController().navigate(R.id.action_main_fragment_to_rocket_list_fragment, bundle)
+        } else {
+            msg("wait for the update to finish", view)
+        }
     }
 
     private fun msg(text: String, view: View) {
