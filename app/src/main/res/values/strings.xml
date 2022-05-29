@@ -33,8 +33,9 @@
     <string name="rocket_info">rocket info</string>
 
     <!-- detailed rocket fragment -->
+    <string name="rocket">rocket info</string>
+    <string name="rocket_launch_date">date</string>
     <string name="detailed_button_maps">maps</string>
-    <string name="rocket">rocket</string>
 
     <!-- navigation drawer -->
     <string name="nav_drawer_title">Onze mooie app</string>

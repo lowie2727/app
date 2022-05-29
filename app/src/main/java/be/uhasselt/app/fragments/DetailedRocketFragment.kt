@@ -13,6 +13,8 @@ import be.uhasselt.app.model.RocketLaunch
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.squareup.picasso.Picasso
+import java.time.Instant
+import java.util.*
 
 
 class DetailedRocketFragment : Fragment(R.layout.detailed_rocket_fragment) {
@@ -39,8 +41,11 @@ class DetailedRocketFragment : Fragment(R.layout.detailed_rocket_fragment) {
         val type = object : TypeToken<RocketLaunch>() {}.type
         rocketLaunch = Gson().fromJson<RocketLaunch>(data, type)!!
 
-        binding.textViewDetailedRocket.text =
+        binding.textViewRocketInfo.text =
             "rocket: ${rocketLaunch.rocketName}\nmission: ${rocketLaunch.missionName}"
+
+        binding.textViewLaunchDate.text = formatDate()
+
     }
 
     private fun maps(view: View) {
@@ -58,5 +63,19 @@ class DetailedRocketFragment : Fragment(R.layout.detailed_rocket_fragment) {
         if (rocketLaunch.rocketImageUrl.isNotEmpty()) {
             Picasso.get().load(rocketLaunch.rocketImageUrl).into(binding.imageViewRocket)
         }
+    }
+
+    private fun formatDate(): String {
+        val time = Instant.parse(rocketLaunch.launchDate)
+        val launchDateLocalTime = time.atZone(TimeZone.getDefault().toZoneId())
+
+        val year = launchDateLocalTime.year
+        val month = String.format("%02d", launchDateLocalTime.monthValue)
+        val day = String.format("%02d", launchDateLocalTime.dayOfMonth)
+        val hour = String.format("%02d", launchDateLocalTime.hour)
+        val minute = String.format("%02d", launchDateLocalTime.minute)
+        val second = String.format("%02d", launchDateLocalTime.second)
+
+        return "$day/$month/$year\n$hour:$minute:$second"
     }
 }

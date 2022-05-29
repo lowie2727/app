@@ -31,7 +31,7 @@ object LL2ResultParser {
 
             val rocketLaunch = RocketLaunch(
                 rocket.getJSONObject("configuration").getString("name"),
-                launch.getString("window_start"),
+                launch.getString("net"),
                 launchPad.getString("latitude"),
                 launchPad.getString("longitude"),
                 mission,
