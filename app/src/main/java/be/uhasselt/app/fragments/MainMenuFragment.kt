@@ -42,7 +42,7 @@ class MainMenuFragment : Fragment(R.layout.main_menu_fragment) {
     }
 
     private fun setupAPIResponse(view: View) {
-        request = LL2Request(requireContext()) { isSuccess, jsonObject, error ->
+        request = LL2Request(view.context) { isSuccess, jsonObject, error ->
             if (isSuccess) {
                 rocketLaunches = LL2ResultParser.parse(jsonObject!!)
                 saveRocketsToFile(rocketLaunches, "rockets.txt", view)

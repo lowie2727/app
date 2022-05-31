@@ -16,7 +16,6 @@ import com.squareup.picasso.Picasso
 import java.time.Instant
 import java.util.*
 
-
 class DetailedRocketFragment : Fragment(R.layout.detailed_rocket_fragment) {
     private lateinit var binding: DetailedRocketFragmentBinding
     private lateinit var rocketLaunch: RocketLaunch

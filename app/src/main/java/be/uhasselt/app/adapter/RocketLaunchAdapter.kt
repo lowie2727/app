@@ -12,14 +12,12 @@ import androidx.recyclerview.widget.RecyclerView
 import be.uhasselt.app.R
 import be.uhasselt.app.file.SaveFile
 import be.uhasselt.app.model.RocketLaunch
-import be.uhasselt.app.net.Appwrite
 import com.google.gson.Gson
 
 class RocketLaunchAdapter(private val rocketLaunches: ArrayList<RocketLaunch>) :
     RecyclerView.Adapter<RocketLaunchAdapter.RocketViewHolder>() {
 
     private lateinit var context: Context
-    private var appwrite: Appwrite = Appwrite
 
     inner class RocketViewHolder(currentItemView: View) : RecyclerView.ViewHolder(currentItemView) {
         init {
@@ -49,10 +47,6 @@ class RocketLaunchAdapter(private val rocketLaunches: ArrayList<RocketLaunch>) :
                 rocketLaunch.isFavorite = checkBox.isChecked
                 saveRocketsToFile(rocketLaunches, "rockets.txt")
                 showFavorites()
-
-                appwrite.getAccount { isSuccess, errorMessage, userData ->
-                    // TODO save favorites to appwrite
-                }
             }
 
             findViewById<TextView>(R.id.text_view_rocket_launch).text =
@@ -75,7 +69,6 @@ class RocketLaunchAdapter(private val rocketLaunches: ArrayList<RocketLaunch>) :
             }
         }
         saveRocketsToFile(favoriteList, "favorites.txt")
-
     }
 
     override fun getItemCount(): Int = rocketLaunches.size

@@ -33,7 +33,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
     }
 
     private fun login(view: View) {
-        if (!MainActivity().checkInternet(requireContext())) {
+        if (!MainActivity().checkInternet(view.context)) {
             msg("No internet connection", view)
             return
         }

@@ -66,6 +66,7 @@ class RegisterFragment : Fragment(R.layout.register_fragment) {
         } else {
             msg("creating account", view)
         }
+
         appwrite.createAccount(userId, email, password, name) { isSuccess, error ->
             if (isSuccess) {
                 msg("success", view)
