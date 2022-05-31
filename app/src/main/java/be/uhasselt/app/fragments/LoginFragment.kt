@@ -16,7 +16,7 @@ import com.google.android.material.snackbar.Snackbar
 class LoginFragment : Fragment(R.layout.login_fragment) {
 
     private lateinit var binding: LoginFragmentBinding
-    private lateinit var appwrite: Appwrite
+    private var appwrite: Appwrite = Appwrite
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,8 +24,6 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
         savedInstanceState: Bundle?
     ): View {
         binding = LoginFragmentBinding.inflate(layoutInflater)
-
-        appwriteSetup()
 
         binding.buttonLogin.setOnClickListener(this::login)
         binding.buttonGoToCreateAccount.setOnClickListener(this::goToCreateAccount)
@@ -55,19 +53,15 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
         } else {
             msg("loading...", view)
         }
-        appwrite.createSession(email, password)
-    }
 
-    private fun appwriteSetup() {
-        appwrite = Appwrite { isSuccess, error, _ ->
+        appwrite.createSession(email, password) { isSuccess, error ->
             if (isSuccess) {
-                msg("success", requireView())
+                msg("success", view)
                 findNavController().navigate(R.id.action_login_fragment_to_main_fragment)
             } else {
-                msg(error!!, requireView())
+                msg(error, view)
             }
         }
-        appwrite.createClient(requireContext())
     }
 
     private fun goToCreateAccount(view: View) {

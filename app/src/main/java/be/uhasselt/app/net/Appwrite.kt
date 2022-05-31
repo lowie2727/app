@@ -1,44 +1,53 @@
 package be.uhasselt.app.net
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import be.uhasselt.app.MainActivity
 import io.appwrite.Client
 import io.appwrite.exceptions.AppwriteException
 import io.appwrite.models.User
 import io.appwrite.services.Account
+import io.appwrite.services.Database
+import io.appwrite.services.Storage
 import kotlinx.coroutines.launch
+import org.json.JSONObject
+import java.io.File
 
-class Appwrite(private val onResponse: (isSuccess: Boolean, errorMessage: String?, user: User?) -> Unit) :
-    ViewModel() {
+object Appwrite : ViewModel() {
 
-    private lateinit var client: Client
-    lateinit var account: Account
+    private var client: Client = Client(MainActivity.applicationContext())
+        .setEndpoint("https://appwrite.lowie.xyz/v1") // Your API Endpoint
+        .setProject("627bac3c2508bec32bc2") // Your project ID
+        .setSelfSigned(true)
+    private var account: Account = Account(client)
+    private var storage: Storage = Storage(client)
+    private var database: Database = Database(client)
 
-    fun createClient(context: Context) {
-        client = Client(context)
-            .setEndpoint("https://appwrite.lowie.xyz/v1") // Your API Endpoint
-            .setProject("627bac3c2508bec32bc2") // Your project ID
-            .setSelfSigned(true)
-
-        account = Account(client)
-    }
-
-    fun createSession(email: String, password: String) {
+    fun createSession(
+        email: String,
+        password: String,
+        onResponseCreateSession: (isSuccess: Boolean, errorMessage: String) -> Unit
+    ) {
         viewModelScope.launch {
             try {
                 account.createSession(
                     email = email,
                     password = password
                 )
-                onResponse(true, null, null)
+                onResponseCreateSession(true, "No error")
             } catch (e: AppwriteException) {
-                onResponse(false, e.message.toString(), null)
+                onResponseCreateSession(false, e.message.toString())
             }
         }
     }
 
-    fun createAccount(userId: String, email: String, password: String, name: String) {
+    fun createAccount(
+        userId: String,
+        email: String,
+        password: String,
+        name: String,
+        onResponseCreateAccount: (isSuccess: Boolean, errorMessage: String) -> Unit
+    ) {
         viewModelScope.launch {
             try {
                 account.create(
@@ -47,20 +56,56 @@ class Appwrite(private val onResponse: (isSuccess: Boolean, errorMessage: String
                     password = password,
                     name = name
                 )
-                onResponse(true, null, null)
+                onResponseCreateAccount(true, "No error")
             } catch (e: AppwriteException) {
-                onResponse(false, e.message.toString(), null)
+                onResponseCreateAccount(false, e.message.toString())
             }
         }
     }
 
-    fun getAccount() {
+    fun getAccount(onResponseGetAccount: (isSuccess: Boolean, errorMessage: String, userData: User?) -> Unit) {
         viewModelScope.launch {
             try {
                 val user = account.get()
-                onResponse(true, null, user)
+                onResponseGetAccount(true, "No error", user)
             } catch (e: AppwriteException) {
-                onResponse(true, e.message.toString(), null)
+                onResponseGetAccount(false, e.message.toString(), null)
+            }
+        }
+    }
+
+    fun storeToDataBase(
+        jsonData: JSONObject,
+        onResponseCreateFile: (isSuccess: Boolean, errorMessage: String) -> Unit
+    ) {
+        viewModelScope.launch {
+            try {
+                database.createDocument(
+                    collectionId = "favorites",
+                    documentId = "favorites",
+                    data = jsonData
+                )
+                onResponseCreateFile(true, "No error")
+            } catch (e: AppwriteException) {
+                onResponseCreateFile(false, e.message.toString())
+            }
+        }
+    }
+
+    fun storeToFile(
+        file: File,
+        onResponseFile: (isSuccess: Boolean, errorMessage: String) -> Unit
+    ) {
+        viewModelScope.launch {
+            try {
+                storage.createFile(
+                    bucketId = "favorites",
+                    fileId = "unique()",
+                    file = file
+                )
+                onResponseFile(true, "No error")
+            } catch (e: AppwriteException) {
+                onResponseFile(false, e.message.toString())
             }
         }
     }

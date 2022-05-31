@@ -37,7 +37,7 @@ class MainMenuFragment : Fragment(R.layout.main_menu_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupAPIResponse(view)
-        request()
+        request(view)
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -45,7 +45,7 @@ class MainMenuFragment : Fragment(R.layout.main_menu_fragment) {
         request = LL2Request(requireContext()) { isSuccess, jsonObject, error ->
             if (isSuccess) {
                 rocketLaunches = LL2ResultParser.parse(jsonObject!!)
-                saveRocketsToFile(rocketLaunches)
+                saveRocketsToFile(rocketLaunches, "rockets.txt", view)
                 msg("update successful", view)
             } else {
                 if (error!!.networkResponse == null) {
@@ -64,8 +64,8 @@ class MainMenuFragment : Fragment(R.layout.main_menu_fragment) {
         }
     }
 
-    private fun request() {
-        loadRocketsFromFile()
+    private fun request(view: View) {
+        loadRocketsFromFile("rockets.txt", view)
         if (rocketLaunches.isEmpty()) {
             isClear = false
             request.load()
@@ -78,16 +78,20 @@ class MainMenuFragment : Fragment(R.layout.main_menu_fragment) {
         msg("updating launches", view)
     }
 
-    private fun saveRocketsToFile(rocketLaunches: ArrayList<RocketLaunch>) {
+    private fun saveRocketsToFile(
+        rocketLaunches: ArrayList<RocketLaunch>,
+        fileName: String,
+        view: View
+    ) {
         val jsonDataLaunches: String = Gson().toJson(rocketLaunches)
-        val saveFile = SaveFile(requireContext())
-        saveFile.save(jsonDataLaunches, "rockets.txt")
+        val saveFile = SaveFile(view.context)
+        saveFile.save(jsonDataLaunches, fileName)
     }
 
-    private fun loadRocketsFromFile() {
+    private fun loadRocketsFromFile(fileName: String, view: View) {
         if (rocketLaunches.isEmpty()) {
-            val saveFile = SaveFile(requireContext())
-            val jsonDataLaunches = saveFile.load("rockets.txt")
+            val saveFile = SaveFile(view.context)
+            val jsonDataLaunches = saveFile.load(fileName)
             val type = object : TypeToken<ArrayList<RocketLaunch>>() {}.type
             val launchesLoadedFromFile =
                 Gson().fromJson<ArrayList<RocketLaunch>>(jsonDataLaunches, type)

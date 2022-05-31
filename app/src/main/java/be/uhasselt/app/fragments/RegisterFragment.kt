@@ -16,7 +16,7 @@ import be.uhasselt.app.net.Appwrite
 class RegisterFragment : Fragment(R.layout.register_fragment) {
 
     private lateinit var binding: RegisterFragmentBinding
-    private lateinit var appwrite: Appwrite
+    private var appwrite: Appwrite = Appwrite
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,8 +24,6 @@ class RegisterFragment : Fragment(R.layout.register_fragment) {
         savedInstanceState: Bundle?
     ): View {
         binding = RegisterFragmentBinding.inflate(layoutInflater)
-
-        appwriteSetup()
 
         binding.registerButtonCreateAccount.setOnClickListener(this::createAccount)
         binding.cancelButton.setOnClickListener(this::cancel)
@@ -68,19 +66,14 @@ class RegisterFragment : Fragment(R.layout.register_fragment) {
         } else {
             msg("creating account", view)
         }
-        appwrite.createAccount(userId, email, password, name)
-    }
-
-    private fun appwriteSetup() {
-        appwrite = Appwrite { isSuccess, error, _ ->
+        appwrite.createAccount(userId, email, password, name) { isSuccess, error ->
             if (isSuccess) {
-                msg("success", requireView())
+                msg("success", view)
                 findNavController().navigate(R.id.action_register_fragment_to_login_fragment)
             } else {
-                msg(error!!, requireView())
+                msg(error, view)
             }
         }
-        appwrite.createClient(requireContext())
     }
 
     private fun msg(text: String, view: View) {

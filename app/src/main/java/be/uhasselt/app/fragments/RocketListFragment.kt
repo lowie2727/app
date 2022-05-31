@@ -31,7 +31,7 @@ class RocketListFragment : Fragment(R.layout.rocket_list_fragment) {
     ): View {
         binding = RocketListFragmentBinding.inflate(layoutInflater)
 
-        loadRocketsFromFile()
+        loadRocketsFromFile("rockets.txt")
         setupAdapter()
 
         return binding.root
@@ -52,7 +52,7 @@ class RocketListFragment : Fragment(R.layout.rocket_list_fragment) {
         request = LL2Request(requireContext()) { isSuccess, jsonObject, error ->
             if (isSuccess) {
                 rocketLaunches = LL2ResultParser.parse(jsonObject!!)
-                saveRocketsToFile(rocketLaunches)
+                saveRocketsToFile(rocketLaunches, "rockets.txt")
                 msg("update successful", view)
             } else {
                 if (error!!.networkResponse == null) {
@@ -78,16 +78,16 @@ class RocketListFragment : Fragment(R.layout.rocket_list_fragment) {
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
     }
 
-    private fun saveRocketsToFile(rocketLaunches: ArrayList<RocketLaunch>) {
+    private fun saveRocketsToFile(rocketLaunches: ArrayList<RocketLaunch>, fileName: String) {
         val jsonDataLaunches: String = Gson().toJson(rocketLaunches)
         val saveFile = SaveFile(requireContext())
-        saveFile.save(jsonDataLaunches, "rockets.txt")
+        saveFile.save(jsonDataLaunches, fileName)
     }
 
-    private fun loadRocketsFromFile() {
+    private fun loadRocketsFromFile(fileName: String) {
         if (rocketLaunches.isEmpty()) {
             val saveFile = SaveFile(requireContext())
-            val jsonDataLaunches = saveFile.load("rockets.txt")
+            val jsonDataLaunches = saveFile.load(fileName)
             val type = object : TypeToken<ArrayList<RocketLaunch>>() {}.type
             val launchesLoadedFromFile =
                 Gson().fromJson<ArrayList<RocketLaunch>>(jsonDataLaunches, type)

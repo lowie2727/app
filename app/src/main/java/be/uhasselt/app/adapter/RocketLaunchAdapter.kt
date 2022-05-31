@@ -12,12 +12,14 @@ import androidx.recyclerview.widget.RecyclerView
 import be.uhasselt.app.R
 import be.uhasselt.app.file.SaveFile
 import be.uhasselt.app.model.RocketLaunch
+import be.uhasselt.app.net.Appwrite
 import com.google.gson.Gson
 
 class RocketLaunchAdapter(private val rocketLaunches: ArrayList<RocketLaunch>) :
     RecyclerView.Adapter<RocketLaunchAdapter.RocketViewHolder>() {
 
     private lateinit var context: Context
+    private var appwrite: Appwrite = Appwrite
 
     inner class RocketViewHolder(currentItemView: View) : RecyclerView.ViewHolder(currentItemView) {
         init {
@@ -45,7 +47,12 @@ class RocketLaunchAdapter(private val rocketLaunches: ArrayList<RocketLaunch>) :
 
             checkBox.setOnClickListener {
                 rocketLaunch.isFavorite = checkBox.isChecked
-                saveRocketsToFile(rocketLaunches)
+                saveRocketsToFile(rocketLaunches, "rockets.txt")
+                showFavorites()
+
+                appwrite.getAccount { isSuccess, errorMessage, userData ->
+                    // TODO save favorites to appwrite
+                }
             }
 
             findViewById<TextView>(R.id.text_view_rocket_launch).text =
@@ -53,10 +60,22 @@ class RocketLaunchAdapter(private val rocketLaunches: ArrayList<RocketLaunch>) :
         }
     }
 
-    private fun saveRocketsToFile(rocketLaunches: ArrayList<RocketLaunch>) {
+    private fun saveRocketsToFile(rocketLaunches: ArrayList<RocketLaunch>, fileName: String) {
         val jsonDataLaunches: String = Gson().toJson(rocketLaunches)
         val saveFile = SaveFile(context)
-        saveFile.save(jsonDataLaunches, "rockets.txt")
+        saveFile.save(jsonDataLaunches, fileName)
+    }
+
+
+    private fun showFavorites() {
+        val favoriteList = arrayListOf<RocketLaunch>()
+        for (rocket in rocketLaunches) {
+            if (rocket.isFavorite) {
+                favoriteList.add(rocket)
+            }
+        }
+        saveRocketsToFile(favoriteList, "favorites.txt")
+
     }
 
     override fun getItemCount(): Int = rocketLaunches.size
