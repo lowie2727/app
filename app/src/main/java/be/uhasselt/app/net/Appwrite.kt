@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import be.uhasselt.app.MainActivity
 import io.appwrite.Client
+import io.appwrite.ID
 import io.appwrite.exceptions.AppwriteException
 import io.appwrite.services.Account
 import kotlinx.coroutines.launch
@@ -11,11 +12,10 @@ import kotlinx.coroutines.launch
 object Appwrite : ViewModel() {
 
     private var client: Client = Client(MainActivity.applicationContext())
-        .setEndpoint("https://appwrite.lowie.xyz/v1") // Your API Endpoint
-        .setProject("627bac3c2508bec32bc2") // Your project ID
-        .setSelfSigned(true)
+        .setEndpoint("http://appwrite.home/v1") // Your API Endpoint
+        .setProject("633351acaf343fd1732d") // Your project ID
     private val account: Account = Account(client)
-    var currentLoginName = "anonymous"
+    var accountName = "anonymous"
 
     fun createSession(
         email: String,
@@ -24,11 +24,11 @@ object Appwrite : ViewModel() {
     ) {
         viewModelScope.launch {
             try {
-                val response = account.createSession(
+                account.createEmailSession(
                     email = email,
                     password = password
                 )
-                currentLoginName = response.userId
+                accountName = account.get().name
                 onResponseCreateSession(true, "No error")
             } catch (e: AppwriteException) {
                 onResponseCreateSession(false, e.message.toString())
@@ -37,7 +37,6 @@ object Appwrite : ViewModel() {
     }
 
     fun createAccount(
-        userId: String,
         email: String,
         password: String,
         name: String,
@@ -46,7 +45,7 @@ object Appwrite : ViewModel() {
         viewModelScope.launch {
             try {
                 account.create(
-                    userId = userId,
+                    userId = ID.unique(),
                     email = email,
                     password = password,
                     name = name

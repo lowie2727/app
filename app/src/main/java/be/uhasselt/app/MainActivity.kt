@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        name = appwrite.currentLoginName
+        name = appwrite.accountName
 
         val navigationView = findViewById<NavigationView>(R.id.navigation_view)
         val headerView = navigationView.getHeaderView(0)

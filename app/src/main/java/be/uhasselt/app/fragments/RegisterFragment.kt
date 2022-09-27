@@ -67,7 +67,7 @@ class RegisterFragment : Fragment(R.layout.register_fragment) {
             msg("creating account", view)
         }
 
-        appwrite.createAccount(userId, email, password, name) { isSuccess, error ->
+        appwrite.createAccount(email, password, name) { isSuccess, error ->
             if (isSuccess) {
                 msg("success", view)
                 findNavController().navigate(R.id.action_register_fragment_to_login_fragment)
